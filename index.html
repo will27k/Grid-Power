@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRID POWER</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main-container">
+        <h1>GRID POWER</h1>
+        
+        <div class="level-select">
+            <div class="level-buttons">
+                <button id="level-1" class="level-btn active">Level 1</button>
+                <button id="level-2" class="level-btn">Level 2</button>
+                <button id="level-3" class="level-btn">Level 3</button>
+                <button id="level-4" class="level-btn">Level 4</button>
+                <button id="level-5" class="level-btn">Level 5</button>
+                <button id="level-6" class="level-btn">Level 6</button>
+                <button id="level-7" class="level-btn">Level 7</button>
+                <button id="level-8" class="level-btn">Level 8</button>
+            </div>
+            <div class="daily-challenge-container">
+                <button id="daily-challenge" class="daily-btn">Daily Challenge</button>
+            </div>
+        </div>
+        
+        <div class="game-layout">
+            <!-- Left column: Rules -->
+            <div class="rules-column">
+                <h2>Game Rules</h2>
+                <div class="game-rules">
+                    <p>Click on <span class="white-text">white</span> tiles to flip them and adjacent tiles.</p>
+                    <p><span class="black-text">Black</span> tiles cannot be clicked.</p>
+                    <p>Win by turning all tiles black!</p>
+                    
+                    <div id="power-tile-info" class="power-tile-info">
+                        <h3>Power Tiles:</h3>
+                        <div class="power-tile-container">
+                            <div class="power-tile-example white red-border"></div>
+                            <p><strong>Red tile:</strong> Flips diagonally in an X pattern (center + 4 diagonal corners)</p>
+                        </div>
+                        <div class="power-tile-container">
+                            <div class="power-tile-example white blue-border"></div>
+                            <p><strong>Blue tile:</strong> Only flips adjacent tiles in a + pattern (not itself)</p>
+                        </div>
+                        <div class="power-tile-container">
+                            <div class="power-tile-example black green-border"></div>
+                            <p><strong>Green tile:</strong> Can be clicked even when black (+ pattern)</p>
+                        </div>
+                        <div class="power-tile-container">
+                            <div class="power-tile-example white purple-border"></div>
+                            <p><strong>Purple tile:</strong> Flips all tiles in its row and column</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Middle column: Game board -->
+            <div class="game-column">
+                <div id="game-board" class="game-board"></div>
+                <div class="game-controls">
+                    <div class="moves-counter" id="moves-counter">Moves: 0</div>
+                    <button id="reset-button">Reset Level</button>
+                </div>
+            </div>
+            
+            <!-- Right column: Solution -->
+            <div class="solution-column">
+                <h2>Solution</h2>
+                <button id="reveal-solution">Reveal Answer</button>
+                <div id="solution-container" class="solution-container hidden">
+                    <h3>Solve in <span id="solution-moves">2</span> moves:</h3>
+                    <ol id="solution-steps">
+                        <!-- Will be filled dynamically by JavaScript -->
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Congratulations Modal -->
+    <div id="congrats-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Congratulations!</h2>
+            </div>
+            <div class="modal-body">
+                <p id="congrats-message"></p>
+            </div>
+            <div class="modal-footer">
+                <button id="next-level-btn">Next Level</button>
+                <button id="replay-level-btn">Play Again</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html> 
