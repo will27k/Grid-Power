@@ -744,7 +744,7 @@ function changeLevel(level) {
     
     // Update document title
     if (level === 'daily') {
-        document.title = "GRID POWER - Daily Challenge";
+        document.title = "GRID POWER - Daily";
         document.getElementById('daily-challenge').classList.add('active');
     } else {
         document.title = `GRID POWER - Level ${level}`;
@@ -1124,6 +1124,9 @@ window.addEventListener('DOMContentLoaded', () => {
         
         // Activate daily button
         dailyButton.classList.add('active');
+        
+        // Update document title
+        document.title = "GRID POWER - Daily";
         
         // Set current level to daily and initialize
         currentLevel = 'daily';
