@@ -115,13 +115,12 @@ const LEVEL_SOLUTIONS = {
         { row: 2, col: 2 }  // (C3) - purple power tile
     ],
     
-    // Daily Challenge: 5 moves to solve
+    // Daily Challenge: 4 moves to solve
     'daily': [
-        { row: 0, col: 3 }, // (D1) - purple power tile
-        { row: 3, col: 0 }, // (A4) - red power tile
-        { row: 2, col: 1 }, // (B3) - normal tile
-        { row: 1, col: 2 }, // (C2) - green power tile
-        { row: 3, col: 3 }  // (D4) - blue power tile
+        { row: 2, col: 2 }, // (C3)
+        { row: 1, col: 2 }, // (B3)
+        { row: 0, col: 2 }, // (C1)
+        { row: 0, col: 0 }  // (A1)
     ]
 };
 
@@ -190,7 +189,7 @@ function initializeGame() {
     } else if (currentLevel === 7) {
         solutionMovesElement.textContent = '4';
     } else if (currentLevel === 'daily') {
-        solutionMovesElement.textContent = '5';
+        solutionMovesElement.textContent = '4';
     } else {
         solutionMovesElement.textContent = '4';
     }
@@ -434,23 +433,25 @@ function initializeFixedLevel(level) {
     // Special case for daily challenge
     else if (level === 'daily') {
         // Setup specific layout with all power tiles:
-        // 0 = white normal tile
-        // X = black normal tile
-        // R = red power tile (white)
-        // G = green power tile (white)
-        // B = blue power tile (white)
-        // P = purple power tile (white)
-        // Layout: P00G00X0XR0XBX00
+        // o = white normal tile
+        // x = black normal tile
+        // r, g, b, p = power tiles when white (lowercase)
+        // R, G, B, P = power tiles when black (uppercase)
+        // Layout: pxooxooxorGoBoxx
         
         // Convert layout to numerical encoding for processing
-        const layoutString = "P00G00X0XR0XBX00";
+        const layoutString = "pxbxxxoxoRgoxxxx";
         const layoutEncoding = {
-            '0': '0',  // white normal tile
-            'X': '1',  // black normal tile
-            'R': '2',  // red power tile (white)
-            'G': '3',  // green power tile (white)
-            'B': '4',  // blue power tile (white)
-            'P': '5'   // purple power tile (white)
+            'o': '0',  // white normal tile
+            'x': '1',  // black normal tile
+            'r': '2',  // red power tile (white)
+            'g': '3',  // green power tile (white)
+            'b': '4',  // blue power tile (white)
+            'p': '5',  // purple power tile (white)
+            'R': '6',  // red power tile (black)
+            'G': '7',  // green power tile (black)
+            'B': '8',  // blue power tile (black)
+            'P': '9'   // purple power tile (black)
         };
         
         let layout = "";
@@ -524,6 +525,54 @@ function initializeFixedLevel(level) {
                     purpleTile.classList.remove(BLACK);
                     purpleTile.classList.add(WHITE);
                     purpleTile.classList.add('purple-border');
+                    break;
+                    
+                case '6':
+                    // Red power tile - starts black
+                    gameBoard[row][col].color = BLACK;
+                    gameBoard[row][col].power = POWER_TYPES.RED;
+                    
+                    // Update the DOM
+                    const redTileBlack = document.querySelector(`.tile[data-row="${row}"][data-col="${col}"]`);
+                    redTileBlack.classList.remove(WHITE);
+                    redTileBlack.classList.add(BLACK);
+                    redTileBlack.classList.add('red-border');
+                    break;
+                    
+                case '7':
+                    // Green power tile - starts black
+                    gameBoard[row][col].color = BLACK;
+                    gameBoard[row][col].power = POWER_TYPES.GREEN;
+                    
+                    // Update the DOM
+                    const greenTileBlack = document.querySelector(`.tile[data-row="${row}"][data-col="${col}"]`);
+                    greenTileBlack.classList.remove(WHITE);
+                    greenTileBlack.classList.add(BLACK);
+                    greenTileBlack.classList.add('green-border');
+                    break;
+                    
+                case '8':
+                    // Blue power tile - starts black
+                    gameBoard[row][col].color = BLACK;
+                    gameBoard[row][col].power = POWER_TYPES.BLUE;
+                    
+                    // Update the DOM
+                    const blueTileBlack = document.querySelector(`.tile[data-row="${row}"][data-col="${col}"]`);
+                    blueTileBlack.classList.remove(WHITE);
+                    blueTileBlack.classList.add(BLACK);
+                    blueTileBlack.classList.add('blue-border');
+                    break;
+                    
+                case '9':
+                    // Purple power tile - starts black
+                    gameBoard[row][col].color = BLACK;
+                    gameBoard[row][col].power = POWER_TYPES.PURPLE;
+                    
+                    // Update the DOM
+                    const purpleTileBlack = document.querySelector(`.tile[data-row="${row}"][data-col="${col}"]`);
+                    purpleTileBlack.classList.remove(WHITE);
+                    purpleTileBlack.classList.add(BLACK);
+                    purpleTileBlack.classList.add('purple-border');
                     break;
             }
         }
@@ -718,11 +767,11 @@ function revealSolution() {
     if (currentLevel === 1) {
         // Display the hardcoded solution for level 1
         const step1 = document.createElement('li');
-        step1.textContent = 'Click the white tile at position B2';
+        step1.textContent = 'Click the tile at position B2';
         solutionStepsElement.appendChild(step1);
         
         const step2 = document.createElement('li');
-        step2.textContent = 'Click the white tile at position A1';
+        step2.textContent = 'Click the tile at position A1';
         solutionStepsElement.appendChild(step2);
     } 
     // For level 2, show the hardcoded solution
@@ -819,11 +868,10 @@ function revealSolution() {
     // For Daily Challenge
     else if (currentLevel === 'daily') {
         const steps = [
-            'Click the purple-bordered tile at position D1',
-            'Click the red-bordered tile at position A4',
-            'Click the white tile at position B3',
-            'Click the green-bordered tile at position C2',
-            'Click the blue-bordered tile at position D4'
+            'Click the tile at position C3',
+            'Click the tile at position B3',
+            'Click the tile at position C1',
+            'Click the tile at position A1'
         ];
         
         steps.forEach(stepText => {
